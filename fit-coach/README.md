@@ -74,11 +74,11 @@ The agent can connect to external services if you have them set up in Claude:
 
 | Integration | What it enables |
 |-------------|----------------|
-| **Strava** | Pull real activity data (pace, HR, distance) to validate what you report |
+| **Strava** | Pull real activity data (pace, HR, distance) to validate what you report. Powered by [Strava MCP](https://github.com/r-huijts/strava-mcp) (credits to [r-huijts](https://github.com/r-huijts)) |
 | **Google Calendar** | Check your schedule before suggesting session days |
 | **Google Drive** | Store files in Drive instead of local folder |
 
-Strava is the most useful one — the agent can catch inconsistencies between what you remember and what your watch actually recorded.
+Strava is the most useful one — the agent can catch inconsistencies between what you remember and what your watch actually recorded. To set it up, you can use the excellent [Strava MCP](https://github.com/r-huijts/strava-mcp.git) created by [r-huijts](https://github.com/r-huijts).
 
 ---
 
