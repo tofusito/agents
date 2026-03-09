@@ -1,29 +1,29 @@
-# [PRODUCTO] — Log de Evaluación
+# [PRODUCT] — Evaluation Log
 
-**Fecha**: YYYY-MM-DD
-**Veredicto**: ✅ SÍ / ❌ NO / ⏳ ESPERA
+**Date**: YYYY-MM-DD
+**Verdict**: ✅ YES / ❌ NO / ⏳ WAIT
 
 ---
 
-## Contexto
-[Qué quiere el usuario y por qué. Qué problema intenta resolver.]
+## Context
+[What the user wants and why. What problem they are trying to solve.]
 
-## Evaluación
+## Evaluation
 
-### 1. Valor Real
-[¿Resuelve un problema que no esté resuelto? ¿Tiene ya algo equivalente?]
+### 1. Real Value
+[Does it solve an unresolved problem? Do they already have something equivalent?]
 
-### 2. Coste por Uso
-- **Precio**: X €
-- **Usos previstos**: X veces/[periodo]
-- **Coste por uso**: X €/uso
+### 2. Cost per Use
+- **Price**: $X
+- **Expected uses**: X times/[period]
+- **Cost per use**: $X/use
 
-### 3. Horas de Trabajo
-- **Precio ÷ tasa**: X horas de trabajo
-- [Perspectiva: "son X días de curro", "es lo que ganas en X horas"]
+### 3. Work Hours
+- **Price ÷ rate**: X work hours
+- [Perspective: "it's X days of work", "it's what you earn in X hours"]
 
 ### 4. BIFL
-[¿Es la versión definitiva? ¿Existe algo mejor por poco más? ¿Ciclo de obsolescencia?]
+[Is it the definitive version? Is there something better for slightly more? Obsolescence cycle?]
 
-## Veredicto Final
-[Resumen en 2-3 frases. Directo, sin florituras.]
+## Final Verdict
+[Summary in 2-3 sentences. Direct, no-nonsense.]

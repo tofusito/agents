@@ -1,112 +1,112 @@
-# 🛍️ Purchase Advisor — Skill para Claude (Cowork)
+# 🛍️ Purchase Advisor — Skill for Claude (Cowork)
 
-Un agente de compras inteligentes que te ayuda a decidir si algo merece la pena comprarse, usando filtros de minimalismo, BIFL y coste real. Cuando decides que sí, documenta el análisis. Siempre guarda un log de la decisión.
-
----
-
-## 🧠 ¿Qué hace?
-
-Cuando le dices que estás pensando en comprar algo, el agente:
-
-1. **Evalúa** si tiene sentido con 4 filtros: valor real, coste por uso, horas de trabajo y filosofía BIFL
-2. **Debate** contigo — si empujas, te contraargumenta con datos
-3. **Emite un veredicto**: ✅ SÍ / ❌ NO / ⏳ ESPERA
-4. **Pregunta** si quieres un análisis en profundidad del producto (puntos fuertes, débiles, alternativas, dónde comprarlo)
-5. **Crea una carpeta** con toda la documentación en tu directorio de compras
+A smart purchasing agent that helps you decide if something is worth buying, using filters for minimalism, BIFL (Buy It For Life), and real cost. When you decide to buy, it documents the analysis. It always keeps a log of the decision.
 
 ---
 
-## 📁 Estructura de carpetas que genera
+## 🧠 What does it do?
+
+When you tell it you're thinking of buying something, the agent:
+
+1. **Evaluates** if it makes sense using 4 filters: real value, cost per use, work hours, and BIFL philosophy.
+2. **Debates** with you — if you push back, it counters with data.
+3. **Issues a verdict**: ✅ YES / ❌ NO / ⏳ WAIT
+4. **Asks** if you want an in-depth analysis of the product (strengths, weaknesses, alternatives, where to buy).
+5. **Creates a folder** with all the documentation in your purchases directory.
+
+---
+
+## 📁 Generated Folder Structure
 
 ```
 📂 2026-03-09 - Nuki Smart Lock Ultra/
-├── LOG.md       → siempre: debate, filtros, veredicto
-└── RESEARCH.md  → solo si lo pides: análisis del producto
+├── LOG.md       → always: debate, filters, verdict
+└── RESEARCH.md  → only if requested: product analysis
 ```
 
 ---
 
-## 🚀 Cómo instalarlo
+## 🚀 How to Install
 
-### Requisitos
-- [Claude Desktop](https://claude.ai/download) con **Cowork** activado
+### Requirements
+- [Claude Desktop](https://claude.ai/download) with **Cowork** enabled
 
-### Instalación
+### Installation
 
-1. Descarga o clona este repo
-2. Abre el archivo `purchase-advisor.skill` con Claude Desktop
-3. Haz clic en **"Copy to your skills"**
-4. Listo — el skill está disponible en cualquier sesión de Cowork
+1. Download or clone this repo.
+2. Open the `purchase-advisor.skill` file with Claude Desktop.
+3. Click on **"Copy to your skills"**.
+4. Done — the skill is available in any Cowork session.
 
-> El skill se activa automáticamente cuando mencionas que quieres comprar algo. No hace falta invocarlo manualmente.
+> The skill activates automatically when you mention you want to buy something. No need to invoke it manually.
 
 ---
 
-## ⚙️ Personalización (importante)
+## ⚙️ Customization (Important)
 
-El agente está pensado para adaptarse a **tu perfil**. Antes de usarlo, edita el archivo `purchase-advisor/references/AGENT.md` con tu información:
+The agent is designed to adapt to **your profile**. Before using it, edit the `purchase-advisor/references/AGENT.md` file with your information:
 
-### Lo que tienes que rellenar
+### What you need to fill in
 
 ```
 references/AGENT.md
 ```
 
-- **Tu perfil**: filosofía de compra, estilo de vida, restricciones (ej: vegano, minimalista…)
-- **Tus finanzas**: ingresos, gastos fijos, presupuesto discrecional mensual
-- **Tu inventario**: qué tienes ya (tech, hogar, audio…) para evitar redundancias
-- **Tu regla de horas**: `Precio ÷ (tu presupuesto discrecional / horas trabajadas al mes)`
+- **Your profile**: purchasing philosophy, lifestyle, restrictions (e.g., vegan, minimalist...).
+- **Your finances**: income, fixed expenses, monthly discretionary budget.
+- **Your inventory**: what you already own (tech, home, audio...) to avoid redundancies.
+- **Your hourly rule**: `Price ÷ (your discretionary budget / hours worked per month)`
 
-### La regla de las X €/hora
+### The X $/hour Rule
 
-Es el filtro más potente. Convierte cada compra en tiempo de vida:
+This is the most powerful filter. It converts every purchase into life time:
 
 ```
-Tasa = Presupuesto discrecional mensual ÷ Horas trabajadas efectivas al mes
+Rate = Monthly discretionary budget ÷ Effective hours worked per month
 ```
 
-Ejemplo: si tienes 1.000 €/mes discrecionales y trabajas ~149h efectivas → **~7 €/hora**. Unos auriculares de 210 € = 30 horas de curro. ¿Los vale?
+Example: if you have $1,000/month discretionary and work ~149 effective hours → **~$7/hour**. $210 headphones = 30 hours of work. Are they worth it?
 
-Las horas efectivas se calculan así:
+Effective hours are calculated like this:
 ```
-(52 semanas × 5 días - festivos - vacaciones) × 8h / 12 meses ≈ 149 h/mes
+(52 weeks × 5 days - holidays - vacations) × 8h / 12 months ≈ 149 h/month
 ```
 
 ---
 
-## 💬 Ejemplos de uso
+## 💬 Usage Examples
 
 ```
-"Estoy pensando en pillarme unos AirPods Pro 2, están a 229 €"
-"¿Merece la pena suscribirme a Netflix ahora que sacaron X serie?"
-"He visto una cafetera de 180 €, ¿debería comprarla?"
-"Mira esto que he visto en Amazon [foto]"
+"I'm thinking of getting AirPods Pro 2, they're 229 €"
+"Is it worth subscribing to Netflix now that X series is out?"
+"I saw a $180 coffee maker, should I buy it?"
+"Look at this thing I saw on Amazon [photo]"
 ```
 
-El agente nunca busca productos desde cero — tú llegas con lo que tienes en mente, él evalúa.
+The agent never searches for products from scratch — you come with what you have in mind, and it evaluates.
 
 ---
 
-## 📂 Estructura del skill
+## 📂 Skill Structure
 
 ```
 purchase-advisor/
-├── SKILL.md                  → orquestador: flujo de trabajo del agente
+├── SKILL.md                  → orchestrator: agent workflow
 ├── references/
-│   └── AGENT.md              → tu perfil, finanzas, inventario y marcos de decisión
+│   └── AGENT.md              → your profile, finances, inventory, and decision frameworks
 └── templates/
-    ├── LOG.md                → plantilla para el log de decisión
-    └── RESEARCH.md           → plantilla para el análisis de producto
+    ├── LOG.md                → template for the decision log
+    └── RESEARCH.md           → template for the product analysis
 ```
 
 ---
 
-## 🔒 Privacidad
+## 🔒 Privacy
 
-El archivo `references/AGENT.md` contiene información personal (finanzas, inventario). No lo subas a un repositorio público sin revisar. La plantilla incluida en este repo es un **ejemplo anónimo** — rellénala con tus datos antes de usar el skill.
+The `references/AGENT.md` file contains personal information (finances, inventory). Do not upload it to a public repository without reviewing it. The template included in this repo is an **anonymous example** — fill it with your data before using the skill.
 
 ---
 
-## 📝 Licencia
+## 📝 License
 
-MIT — úsalo, fórkalo, adáptalo.
+MIT — use it, fork it, adapt it.

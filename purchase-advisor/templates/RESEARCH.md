@@ -1,27 +1,27 @@
-# [PRODUCTO] — Análisis
+# [PRODUCT] — Analysis
 
-**Fecha**: YYYY-MM-DD
-**Precio actual**: X €
+**Date**: YYYY-MM-DD
+**Current Price**: $X
 
 ---
 
-## Puntos Fuertes
-[Lo que realmente destaca. Concreto, no marketing. Reviews técnicos o benchmarks si aplica.]
+## Strengths
+[What really stands out. Concrete, not marketing. Technical reviews or benchmarks if applicable.]
 
-## Puntos Débiles
-[Limitaciones reales, problemas conocidos, quejas habituales tras la compra. Sin suavizar.]
+## Weaknesses
+[Real limitations, known issues, common complaints after purchase. Don't sugarcoat.]
 
-## Alternativas que vale la pena conocer
-[Solo las que realmente compiten o sorprenden. Si no hay ninguna interesante, decirlo.]
+## Alternatives Worth Knowing
+[Only the ones that really compete or surprise. If there are no interesting ones, say so.]
 
-| Alternativa | Precio | Por qué considerarla |
-|-------------|--------|----------------------|
+| Alternative | Price | Why Consider It |
+|-------------|-------|-----------------|
 | | | |
 
-## Dónde Comprarlo
+## Where to Buy
 
-| Tienda | Precio | Notas |
-|--------|--------|-------|
+| Store | Price | Notes |
+|-------|-------|-------|
 | | | |
 
-**Histórico / Timing**: [¿Está en precio alto? ¿Suele bajar en rebajas? ¿Versión nueva inminente?]
+**History / Timing**: [Is it at a high price? Does it usually drop during sales? Imminent new version?]
