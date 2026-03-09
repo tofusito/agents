@@ -35,7 +35,7 @@ Each agent has its own specific instructions and requirements, but the general w
 Open [Claude Desktop](https://claude.ai/download) (or your preferred agentic environment) ideally with directory access or "Cowork" capabilities enabled.
 
 ### 2. Select the Agent
-Navigate into the specific folder of the agent you want to use (e.g., `travel-checklist/`) and set it as your working directory.
+Navigate into the specific folder of the agent you want to use (e.g., `pack-genius/`) and set it as your working directory.
 
 ### 3. Follow the specific instructions
 Read the `README.md` or `AGENT.md` inside that specific agent's folder to understand how to interact with it, how to customize its knowledge base, and what its capabilities are.
