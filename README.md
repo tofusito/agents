@@ -20,6 +20,7 @@ Each agent lives in its own directory with its own tailored instructions, knowle
 📂 agent root
 ├── 📂 pack-genius/             ← Example agent for travel packing
 ├── 📂 fit-coach/               ← Personal training and gym tracking agent
+├── 📂 purchase-advisor/        ← Smart purchasing decision skill agent
 ├── 📂 [future-agents]/         ← New agents will be added here
 ├── .gitignore
 ├── LICENSE
