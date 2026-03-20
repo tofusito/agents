@@ -18,6 +18,7 @@ Each agent lives in its own directory with its own tailored instructions, knowle
 
 ```text
 📂 agent root
+├── 📂 claude-assistant/        ← Claude Code + Telegram homelab assistant
 ├── 📂 pack-genius/             ← Example agent for travel packing
 ├── 📂 fit-coach/               ← Personal training and gym tracking agent
 ├── 📂 purchase-advisor/        ← Smart purchasing decision skill agent
