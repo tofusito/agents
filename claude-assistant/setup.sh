@@ -1,7 +1,7 @@
 #!/bin/bash
 # Claude Homelab Assistant - Setup Script
 
-set -e
+set -euo pipefail
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -15,53 +15,84 @@ echo "║     Claude Homelab Assistant Setup       ║"
 echo "╚══════════════════════════════════════════╝"
 echo -e "${NC}"
 
-# ── 1. Claude Code ────────────────────────────────────────────────────────────
-echo -e "${BLUE}[1/6] Checking Claude Code...${NC}"
-if ! command -v claude &>/dev/null; then
-    echo -e "${RED}Error: Claude Code not found.${NC}"
-    echo "Install it from: https://claude.ai/download"
+# ── 0. OS detection ──────────────────────────────────────────────────────────
+if [[ "$(uname -s)" != "Linux" ]]; then
+    echo -e "${RED}Error: This setup script requires Linux with systemd.${NC}"
+    echo "  Detected OS: $(uname -s)"
     exit 1
 fi
-CLAUDE_BIN=$(which claude)
+
+if ! command -v systemctl &>/dev/null; then
+    echo -e "${RED}Error: systemd is required but not found.${NC}"
+    exit 1
+fi
+
+# ── 1. Claude Code ────────────────────────────────────────────────────────────
+echo -e "${BLUE}[1/7] Checking Claude Code...${NC}"
+if ! command -v claude &>/dev/null; then
+    echo -e "${RED}Error: Claude Code not found.${NC}"
+    echo "  Install it from: https://claude.ai/download"
+    exit 1
+fi
+CLAUDE_BIN=$(command -v claude)
 echo -e "${GREEN}  ✓ Claude Code found at $CLAUDE_BIN${NC}"
 
-# ── 2. Bun ────────────────────────────────────────────────────────────────────
-echo -e "${BLUE}[2/6] Checking Bun (required by the Telegram plugin)...${NC}"
+# ── 2. Python 3 ───────────────────────────────────────────────────────────────
+echo -e "${BLUE}[2/7] Checking Python 3...${NC}"
+if ! command -v python3 &>/dev/null; then
+    echo -e "${RED}Error: Python 3 is required but not found.${NC}"
+    echo "  Install it with your package manager, e.g.: sudo apt install python3"
+    exit 1
+fi
+echo -e "${GREEN}  ✓ Python 3 found at $(command -v python3)${NC}"
+
+# ── 3. Bun ────────────────────────────────────────────────────────────────────
+echo -e "${BLUE}[3/7] Checking Bun (required by the Telegram plugin)...${NC}"
 BUN_PATH=""
 if command -v bun &>/dev/null; then
-    BUN_PATH=$(which bun)
+    BUN_PATH=$(command -v bun)
 elif [ -f "$HOME/.bun/bin/bun" ]; then
     BUN_PATH="$HOME/.bun/bin/bun"
 else
     echo -e "${YELLOW}  Bun not found. Installing...${NC}"
-    curl -fsSL https://bun.sh/install | bash
+    if ! curl -fsSL https://bun.sh/install | bash; then
+        echo -e "${RED}Error: Bun installation failed.${NC}"
+        exit 1
+    fi
     BUN_PATH="$HOME/.bun/bin/bun"
+fi
+
+if [ ! -x "$BUN_PATH" ]; then
+    echo -e "${RED}Error: Bun binary not found or not executable at $BUN_PATH${NC}"
+    exit 1
 fi
 BUN_DIR=$(dirname "$BUN_PATH")
 echo -e "${GREEN}  ✓ Bun found at $BUN_PATH${NC}"
 
-# ── 3. Claude Code auth ───────────────────────────────────────────────────────
-echo -e "${BLUE}[3/6] Checking Claude Code authentication...${NC}"
+# ── 4. Claude Code auth ───────────────────────────────────────────────────────
+echo -e "${BLUE}[4/7] Checking Claude Code authentication...${NC}"
 if ! claude --print "ok" &>/dev/null; then
     echo -e "${YELLOW}  Not authenticated. Opening Claude Code login...${NC}"
     claude
 fi
 echo -e "${GREEN}  ✓ Authenticated${NC}"
 
-# ── 4. Telegram token ─────────────────────────────────────────────────────────
-echo -e "${BLUE}[4/6] Telegram Bot Configuration${NC}"
+# ── 5. Telegram token ─────────────────────────────────────────────────────────
+echo -e "${BLUE}[5/7] Telegram Bot Configuration${NC}"
 echo ""
 echo "  Create a bot with @BotFather on Telegram if you haven't already."
 echo "  Send /newbot to @BotFather and follow the instructions."
 echo ""
-read -p "  Paste your Telegram Bot Token: " TELEGRAM_TOKEN
+read -sp "  Paste your Telegram Bot Token: " TELEGRAM_TOKEN
+echo ""
 if [ -z "$TELEGRAM_TOKEN" ]; then
     echo -e "${RED}Error: Token cannot be empty.${NC}"
     exit 1
 fi
+echo -e "${GREEN}  ✓ Token received${NC}"
 
-# ── 5. Configure Claude Code settings ────────────────────────────────────────
-echo -e "${BLUE}[5/6] Configuring Claude Code...${NC}"
+# ── 6. Configure Claude Code settings ────────────────────────────────────────
+echo -e "${BLUE}[6/7] Configuring Claude Code...${NC}"
 CLAUDE_DIR="$HOME/.claude"
 mkdir -p "$CLAUDE_DIR"
 
@@ -70,13 +101,14 @@ SETTINGS_FILE="$CLAUDE_DIR/settings.json"
 if [ ! -f "$SETTINGS_FILE" ]; then
     echo '{}' > "$SETTINGS_FILE"
 fi
-python3 - <<PYEOF
-import json
-with open('$SETTINGS_FILE') as f:
+python3 - "$SETTINGS_FILE" <<'PYEOF'
+import json, sys
+settings_file = sys.argv[1]
+with open(settings_file) as f:
     s = json.load(f)
 s.setdefault('enabledPlugins', {})['telegram@claude-plugins-official'] = True
 s['skipDangerousModePermissionPrompt'] = True
-with open('$SETTINGS_FILE', 'w') as f:
+with open(settings_file, 'w') as f:
     json.dump(s, f, indent=2)
 PYEOF
 echo -e "${GREEN}  ✓ Settings configured${NC}"
@@ -95,7 +127,7 @@ mkdir -p "$PROJECT_DIR"
 echo '{"hasTrustDialogAccepted": true}' > "$PROJECT_DIR/settings.json"
 echo -e "${GREEN}  ✓ Home directory trusted${NC}"
 
-# ── 6. Interactive: install plugin and pair Telegram ─────────────────────────
+# ── 7. Interactive: install plugin and pair Telegram ─────────────────────────
 echo ""
 echo -e "${YELLOW}╔══════════════════════════════════════════════════════╗"
 echo "║           Manual Step — Read carefully               ║"
@@ -114,9 +146,9 @@ read -p "  Press Enter to open Claude Code..."
 
 claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions || true
 
-# ── 7. Systemd service ────────────────────────────────────────────────────────
+# ── 8. Systemd service ────────────────────────────────────────────────────────
 echo ""
-echo -e "${BLUE}[6/6] Creating systemd service...${NC}"
+echo -e "${BLUE}[7/7] Creating systemd service...${NC}"
 
 CLAUDE_LOCAL="$CLAUDE_DIR/local"
 PATH_ENV="$BUN_DIR:$CLAUDE_LOCAL:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
@@ -142,7 +174,14 @@ EOF
 
 sudo systemctl daemon-reload
 sudo systemctl enable claude
-sudo systemctl restart claude
+
+# Only restart if the service is already running, otherwise start it
+if systemctl is-active --quiet claude; then
+    echo -e "${YELLOW}  Service 'claude' is already running. Restarting...${NC}"
+    sudo systemctl restart claude
+else
+    sudo systemctl start claude
+fi
 
 echo ""
 echo -e "${GREEN}"
