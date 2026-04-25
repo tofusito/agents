@@ -1,8 +1,19 @@
 # 🤖 Agent Forge
 
-A central repository and vault for custom AI agents designed for Claude and other agentic AI platforms. 
+A central repository of practical custom AI agents I use, refine, and share across Claude and other agentic AI platforms.
 
 This space is dedicated to building, refining, and sharing specialized AI assistants that can autonomously manage workflows, generate content, and solve complex tasks.
+
+---
+
+## Featured agents
+
+| Agent | Purpose |
+| --- | --- |
+| `claude-assistant` | Claude Code + Telegram assistant for homelab and local automation workflows. |
+| `fit-coach` | Personal training and gym tracking assistant. |
+| `pack-genius` | Travel packing assistant and example agent structure. |
+| `purchase-advisor` | Purchase decision assistant for comparing options and tradeoffs. |
 
 ---
 
